@@ -20,11 +20,11 @@ async function handleRequest(request: Request): Promise<Response> {
   if (res) {
     return res;
   }
-  
-  if ([".css", ".js", ".html"].some(ext => pathname.endsWith(ext))) {
+
+  if ([".css", ".js", ".html", ".png", ".svg", ".jpg"].some(ext => pathname.endsWith(ext))) {
     const filepath = join("./public/", pathname);
     let fileContent;
-    
+
     try {
       fileContent = await Deno.readFile(filepath);
     } catch (e) {
@@ -58,7 +58,7 @@ async function handleRequest(request: Request): Promise<Response> {
     }
     return new Response(null, { status: 500 });
   }
-  
+
   return new Response(indexHtmlContent,{
     headers: {
       "content-type": "text/html; charset=utf-8",
